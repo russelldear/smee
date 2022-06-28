@@ -1,13 +1,13 @@
 import React from 'react';
 
-import './IngredientList.css';
+import './GroceriesList.css';
 
-const IngredientList = props => {
+const GroceriesList = props => {
   return (
-    <section className="ingredient-list">
+    <section className="groceries-list">
       <h2>Groceries</h2>
       <ul>
-        {props.ingredients.map(ig => (
+        {props.groceries.map(ig => (
           <li key={ig.id} onClick={props.onRemoveItem.bind(this, ig.id)}>
             <span>{ig.title}</span>
           </li>
@@ -17,4 +17,4 @@ const IngredientList = props => {
   );
 };
 
-export default IngredientList;
+export default GroceriesList;

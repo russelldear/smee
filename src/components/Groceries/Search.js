@@ -6,7 +6,7 @@ import useHttp from '../../hooks/http';
 import './Search.css';
 
 const Search = React.memo(props => {
-  const { onLoadIngredients } = props;
+  const { onLoadGroceries } = props;
   const [enteredFilter, setEnteredFilter] = useState('');
   const inputRef = useRef();
   const { isLoading, data, error, sendRequest, clear } = useHttp();
@@ -19,7 +19,7 @@ const Search = React.memo(props => {
             ? ''
             : `?orderBy="title"&equalTo="${enteredFilter}"`;
         sendRequest(
-          'https://rustyshops-71d6f-default-rtdb.firebaseio.com/ingredients.json' + query,
+          'https://rustyshops-71d6f-default-rtdb.firebaseio.com/groceries.json' + query,
           'GET'
         );
       }
@@ -31,16 +31,16 @@ const Search = React.memo(props => {
 
   useEffect(() => {
     if (!isLoading && !error && data) {
-      const loadedIngredients = [];
+      const loadedGroceries = [];
       for (const key in data) {
-        loadedIngredients.push({
+        loadedGroceries.push({
           id: key,
           title: data[key].title
         });
       }
-      onLoadIngredients(loadedIngredients);
+      onLoadGroceries(loadedGroceries);
     }
-  }, [data, isLoading, error, onLoadIngredients]);
+  }, [data, isLoading, error, onLoadGroceries]);
 
   return (
     <section className="search">

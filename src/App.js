@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import Ingredients from './components/Ingredients/Ingredients';
+import Groceries from './components/Groceries/Groceries';
 import Auth from './components/Auth';
 import { AuthContext } from './context/auth-context';
 
@@ -9,7 +9,7 @@ const App = props => {
 
   let content = <Auth />;
   if (authContext.isAuth) {
-    content = <Ingredients />;
+    content = <Groceries />;
   }
 
   return content;

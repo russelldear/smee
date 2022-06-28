@@ -2,23 +2,26 @@ import React, { useState } from 'react';
 
 import Card from '../UI/Card';
 import LoadingIndicator from '../UI/LoadingIndicator';
-import './IngredientForm.css';
+import './GroceriesForm.css';
 
-const IngredientForm = React.memo(props => {
+const GroceriesForm = React.memo(props => {
   const [enteredTitle, setEnteredTitle] = useState('');
 
   const submitHandler = event => {
     event.preventDefault();
-    props.onAddIngredient({ title: enteredTitle });
-    setEnteredTitle('');
+
+    if (enteredTitle) {
+      props.onAddGroceries({ title: enteredTitle });
+      setEnteredTitle('');
+    }
   };
 
   return (
-    <section className="ingredient-form">
+    <section className="groceries-form">
       <Card>
         <form onSubmit={submitHandler}>
           <div className="form-control">
-            <label htmlFor="title">Name</label>
+            <label htmlFor="title">Item</label>
             <input
               type="text"
               id="title"
@@ -28,7 +31,7 @@ const IngredientForm = React.memo(props => {
               }}
             />
           </div>
-          <div className="ingredient-form__actions">
+          <div className="groceries-form__actions">
             <button type="submit">Add Item</button>
             {props.loading && <LoadingIndicator />}
           </div>
@@ -38,4 +41,4 @@ const IngredientForm = React.memo(props => {
   );
 });
 
-export default IngredientForm;
+export default GroceriesForm;
