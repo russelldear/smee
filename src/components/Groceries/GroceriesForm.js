@@ -20,20 +20,22 @@ const GroceriesForm = React.memo(props => {
     <section className="groceries-form">
       <Card>
         <form onSubmit={submitHandler}>
-          <div className="form-control">
-            <label htmlFor="title">Item</label>
-            <input
-              type="text"
-              id="title"
-              value={enteredTitle}
-              onChange={event => {
-                setEnteredTitle(event.target.value);
-              }}
-            />
-          </div>
-          <div className="groceries-form__actions">
-            <button type="submit">Add Item</button>
-            {props.loading && <LoadingIndicator />}
+          <div className='form-control-container'>
+            <div className="form-control">
+              <label htmlFor="title">Item</label>
+              <input
+                type="text"
+                id="title"
+                value={enteredTitle}
+                onChange={event => {
+                  setEnteredTitle(event.target.value);
+                }}
+              />
+            </div>
+            <div className="groceries-form__actions">
+              <button type="submit">Add</button>
+              {props.loading && <LoadingIndicator />}
+            </div>
           </div>
         </form>
       </Card>
