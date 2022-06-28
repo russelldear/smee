@@ -58,7 +58,6 @@ const Ingredients = () => {
 
   const removeIngredientHandler = useCallback(
     ingredientId => {
-      console.log(ingredientId);
       sendRequest(
         `https://rustyshops-71d6f-default-rtdb.firebaseio.com/ingredients/${ingredientId}.json`,
         'DELETE',

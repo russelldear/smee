@@ -35,8 +35,7 @@ const Search = React.memo(props => {
       for (const key in data) {
         loadedIngredients.push({
           id: key,
-          title: data[key].title,
-          amount: data[key].amount
+          title: data[key].title
         });
       }
       onLoadIngredients(loadedIngredients);

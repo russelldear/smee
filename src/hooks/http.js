@@ -42,7 +42,6 @@ const useHttp = () => {
   const sendRequest = useCallback(
     (url, method, body, reqExtra, reqIdentifer) => {
       dispatchHttp({ type: 'SEND', identifier: reqIdentifer });
-      console.log(method);
       fetch(url, {
         method: method,
         body: body,
@@ -51,11 +50,9 @@ const useHttp = () => {
         }
       })
         .then(response => {
-          console.log(response);
           return response.json();
         })
         .then(responseData => {
-          console.log(responseData);
           dispatchHttp({
             type: 'RESPONSE',
             responseData: responseData,
