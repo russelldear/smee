@@ -20,3 +20,12 @@
   display: flex;
   justify-content: space-between;
 }
+
+.removeGroceryItem {
+  cursor: pointer;
+}
+
+.removeItemIcon {
+  width: 20px;
+  height: 20px;
+}

@@ -17,7 +17,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: "none",
   padding: grid * 2,
   margin: `0 0 ${grid}px 0`,
-  background: isDragging ? "lightgreen" : "white",
+  background: isDragging ? "#C1E1C1" : "white",
   ...draggableStyle
 });
 
@@ -67,9 +67,11 @@ const GroceriesList = props => {
                         snapshot.isDragging,
                         provided.draggableProps.style
                       )}
-                      //onClick={props.onRemoveItem.bind(this, item.id)}
                     >
-                      {item.title}
+                      <div className='groceryItemTitle'>{item.title}</div>
+                      <div className='removeGroceryItem' onClick={props.onRemoveItem.bind(this, item.id)}>
+                        <img className='removeItemIcon' src='close-icon.png' alt="Remove item"/>
+                      </div>
                     </div>
                   )}
                 </Draggable>
