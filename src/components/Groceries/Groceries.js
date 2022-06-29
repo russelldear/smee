@@ -3,7 +3,7 @@ import React, { useReducer, useEffect, useCallback, useMemo } from 'react';
 import GroceriesForm from './GroceriesForm';
 import GroceriesList from './GroceriesList';
 import ErrorModal from '../UI/ErrorModal';
-import Search from './Search';
+// import Search from './Search';
 import useHttp from '../../hooks/http';
 
 const groceriesReducer = (currentGroceries, action) => {
@@ -39,9 +39,9 @@ const Groceries = () => {
     } 
   }, [data, reqExtra, reqIdentifer, isLoading, error]);
 
-  const filteredGroceriesHandler = useCallback(filteredGroceries => {
-    dispatch({ type: 'SET', groceries: filteredGroceries });
-  }, []);
+  // const filteredGroceriesHandler = useCallback(filteredGroceries => {
+  //   dispatch({ type: 'SET', groceries: filteredGroceries });
+  // }, []);
 
   const addGroceriesHandler = useCallback(groceries => {
     sendRequest(
@@ -116,7 +116,7 @@ const Groceries = () => {
       />
 
       <section>
-        <Search onLoadGroceries={filteredGroceriesHandler} />
+        {/* <Search onLoadGroceries={filteredGroceriesHandler} /> */}
         {groceriesList}
       </section>
     </div>

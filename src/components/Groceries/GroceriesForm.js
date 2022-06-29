@@ -22,10 +22,11 @@ const GroceriesForm = React.memo(props => {
         <form onSubmit={submitHandler}>
           <div className='form-control-container'>
             <div className="form-control">
-              <label htmlFor="title">Item</label>
+              <label htmlFor="title">Item:</label>
               <input
                 type="text"
                 id="title"
+                size={50}
                 value={enteredTitle}
                 onChange={event => {
                   setEnteredTitle(event.target.value);

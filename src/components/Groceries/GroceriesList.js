@@ -23,7 +23,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 const getListStyle = isDraggingOver => ({
   background: "white",
-  padding: grid
+  padding: `${grid} 0`
 });
 
 const GroceriesList = props => {
