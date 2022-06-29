@@ -35,10 +35,16 @@ const Groceries = () => {
     if (!isLoading && !error && reqIdentifer === 'REMOVE_GROCERIES') {
       dispatch({ type: 'DELETE', id: reqExtra });
     } else if (!isLoading && !error && reqIdentifer === 'ADD_GROCERIES') {
-      dispatch({
-        type: 'ADD',
-        groceries: { id: data.name, ...reqExtra }
-      });
+      dispatch({ type: 'ADD', groceries: { id: data.name, ...reqExtra } });
+    } else if (!isLoading && !error && reqIdentifer === 'UPDATED_GROCERIES') {
+      const loadedGroceries = [];
+      for (const key in data) {
+        loadedGroceries.push({
+          id: key,
+          title: data[key].title
+        });
+      }
+      dispatch({ type: 'SET', groceries: loadedGroceries });
     }
   }, [data, reqExtra, reqIdentifer, isLoading, error]);
 
@@ -69,14 +75,54 @@ const Groceries = () => {
     [sendRequest]
   );
 
+  const updateGroceriesHandler = useCallback(async (groceries) => {
+
+    sendRequest(
+      `https://rustyshops-71d6f-default-rtdb.firebaseio.com/groceries.json`,
+      'DELETE',
+      null,
+      null,
+      'REMOVE_ALL_GROCERIES'
+    );
+
+    dispatch({ type: 'SET', groceries: [] });
+    await sleep(200);
+
+    for (let i = 0; i < groceries.length; i++) {
+      const item = { title: groceries[i].title };
+      sendRequest(
+        'https://rustyshops-71d6f-default-rtdb.firebaseio.com/groceries.json',
+        'POST',
+        JSON.stringify(item),
+        item,
+        'REPLACE_GROCERIES'
+      );
+      await sleep(200);
+    }
+
+    sendRequest(
+      'https://rustyshops-71d6f-default-rtdb.firebaseio.com/groceries.json',
+      'GET',
+      null,
+      null,
+      'UPDATED_GROCERIES'
+    );
+
+  }, [sendRequest]);
+
+  const sleep = async (ms) => {
+    await new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   const groceriesList = useMemo(() => {
     return (
       <GroceriesList
         groceries={userGroceries}
+        onSort={updateGroceriesHandler}
         onRemoveItem={removeGroceriesHandler}
       />
     );
-  }, [userGroceries, removeGroceriesHandler]);
+  }, [userGroceries, updateGroceriesHandler, removeGroceriesHandler]);
 
   return (
     <div className="App">
