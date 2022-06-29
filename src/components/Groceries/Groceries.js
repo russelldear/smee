@@ -36,16 +36,7 @@ const Groceries = () => {
       dispatch({ type: 'DELETE', id: reqExtra });
     } else if (!isLoading && !error && reqIdentifer === 'ADD_GROCERIES') {
       dispatch({ type: 'ADD', groceries: { id: data.name, ...reqExtra } });
-    } else if (!isLoading && !error && reqIdentifer === 'UPDATED_GROCERIES') {
-      const loadedGroceries = [];
-      for (const key in data) {
-        loadedGroceries.push({
-          id: key,
-          title: data[key].title
-        });
-      }
-      dispatch({ type: 'SET', groceries: loadedGroceries });
-    }
+    } 
   }, [data, reqExtra, reqIdentifer, isLoading, error]);
 
   const filteredGroceriesHandler = useCallback(filteredGroceries => {
@@ -76,6 +67,7 @@ const Groceries = () => {
   );
 
   const updateGroceriesHandler = useCallback(async (groceries) => {
+    dispatch({ type: 'SET', groceries: groceries });
 
     sendRequest(
       `https://rustyshops-71d6f-default-rtdb.firebaseio.com/groceries.json`,
@@ -84,8 +76,6 @@ const Groceries = () => {
       null,
       'REMOVE_ALL_GROCERIES'
     );
-
-    dispatch({ type: 'SET', groceries: [] });
     await sleep(200);
 
     for (let i = 0; i < groceries.length; i++) {
@@ -99,14 +89,6 @@ const Groceries = () => {
       );
       await sleep(200);
     }
-
-    sendRequest(
-      'https://rustyshops-71d6f-default-rtdb.firebaseio.com/groceries.json',
-      'GET',
-      null,
-      null,
-      'UPDATED_GROCERIES'
-    );
 
   }, [sendRequest]);
 
