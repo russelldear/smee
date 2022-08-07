@@ -15,14 +15,19 @@
 
 .groceryItem {
   margin: 1rem 0;
-  padding: 0.5rem 1rem;
+  padding: 5px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.26);
   display: flex;
   justify-content: space-between;
 }
 
+.groceryItemTitle {
+  padding: 10px;
+}
+
 .removeGroceryItem {
   cursor: pointer;
+  padding: 10px;
 }
 
 .removeItemIcon {
