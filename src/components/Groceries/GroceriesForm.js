@@ -26,7 +26,7 @@ const GroceriesForm = React.memo(props => {
               <input
                 type="text"
                 id="title"
-                size={30}
+                size={25}
                 value={enteredTitle}
                 onChange={event => {
                   setEnteredTitle(event.target.value);
