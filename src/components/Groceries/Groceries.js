@@ -13,7 +13,7 @@ const groceriesReducer = (currentGroceries, action) => {
     case 'ADD':
       return [...currentGroceries, action.groceries];
     case 'DELETE':
-      return currentGroceries.filter(ing => ing.id !== action.id);
+      return currentGroceries.filter(groceryItem => groceryItem.id !== action.id);
     default:
       throw new Error('Should not get there!');
   }
@@ -55,46 +55,30 @@ const Groceries = () => {
 
   const removeGroceriesHandler = useCallback(
     groceriesId => {
+      const updatedGroceryList = userGroceries.filter(groceryItem => groceryItem.id !== groceriesId)
+      dispatch({ type: 'SET', groceries: updatedGroceryList });  
       sendRequest(
-        `https://rustyshops-71d6f-default-rtdb.firebaseio.com/groceries/${groceriesId}.json`,
-        'DELETE',
+        `https://rustyshops-71d6f-default-rtdb.firebaseio.com/groceries.json`,
+        'PUT',
+        JSON.stringify(updatedGroceryList),
         null,
-        groceriesId,
         'REMOVE_GROCERIES'
       );
     },
-    [sendRequest]
+    [sendRequest, userGroceries]
   );
 
   const updateGroceriesHandler = useCallback(async (groceries) => {
     dispatch({ type: 'SET', groceries: groceries });
 
     sendRequest(
-      `https://rustyshops-71d6f-default-rtdb.firebaseio.com/groceries.json`,
-      'DELETE',
+      'https://rustyshops-71d6f-default-rtdb.firebaseio.com/groceries.json',
+      'PUT',
+      JSON.stringify(groceries),
       null,
-      null,
-      'REMOVE_ALL_GROCERIES'
+      'REPLACE_GROCERIES'
     );
-    await sleep(200);
-
-    for (let i = 0; i < groceries.length; i++) {
-      const item = { title: groceries[i].title };
-      sendRequest(
-        'https://rustyshops-71d6f-default-rtdb.firebaseio.com/groceries.json',
-        'POST',
-        JSON.stringify(item),
-        item,
-        'REPLACE_GROCERIES'
-      );
-      await sleep(200);
-    }
-
   }, [sendRequest]);
-
-  const sleep = async (ms) => {
-    await new Promise(resolve => setTimeout(resolve, ms));
-  }
 
   const groceriesList = useMemo(() => {
     return (
